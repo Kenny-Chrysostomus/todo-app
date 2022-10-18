@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 export const Registration = () => {
   const [email, setEmail] = useState("");
@@ -6,8 +7,22 @@ export const Registration = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
-    console.log("イベント発火");
     e.preventDefault();
+
+    axios.post("http://localhost:3001/signup",
+      {
+        user: {
+          email: email,
+          password: password,
+          password_confirmation: passwordConfirmation
+        }
+      },
+      { withCredentials: true } //cookieを含める
+    ).then(response => {
+      console.log("registration res", response);
+    }).catch(err => {
+      console.log("registration error", err);
+    });
 }
 
   return (

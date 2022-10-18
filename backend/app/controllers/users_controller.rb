@@ -7,7 +7,7 @@ class UsersController < ApplicationController
         login!
         render json: { status: :created, user: @user }
     else
-        render json: { status: 500 }
+        render json: { status: 500, statusText: @user.errors.full_messages }
     end
   end
 
